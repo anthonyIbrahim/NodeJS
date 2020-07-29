@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <html lang="en-us">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+         :root {
+            --color-gray-100: #F7FAFC;
+            --color-gray-300: #E2E8F0;
+            --color-gray-500: #A0AEC0;
+            --color-gray-600: #718096;
+            --color-gray-900: #1A202C;
+            --color-red-700: #C53030;
+            --color-blue-200: #BEE3F8;
+            --color-blue-800: #2C5282;
+            --color-blue-900: #2A4365;
+            --color-primary: #EB9874;
+            --border-radius-standard: 0.5em;
+        }
+        /* Buttons */
+        
+        .btn {
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0.625em 1.25em;
+            margin-bottom: 0.625em;
+            border: 0;
+            outline: none;
+            border-radius: var(--border-radius-standard);
+            text-align: center;
+        }
+        
+        .btn:hover,
+        .btn:focus,
+        .btn:active,
+        .btn.active {
+            outline: none;
+            text-decoration: none;
+        }
+        
+        .btn--text {
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0.5em;
+            color: inherit;
+            transition: color 0.2s ease-out;
+        }
+        
+        .btn--text:hover,
+        .btn--text:focus,
+        .btn--text:active {
+            transition: color 0s ease-in;
+            outline: none;
+            text-decoration: none;
+            color: var(--color-gray-600);
+        }
+        
+        .btn--text--dark {
+            color: var(--color-gray-100);
+        }
+        
+        .btn--inline {
+            padding: 0;
+        }
+        
+        .btn--primary {
+            color: var(--color-gray-100);
+            background-color: var(--color-blue-800);
+        }
+        
+        .btn--primary:hover,
+        .btn--primary:focus,
+        .btn--primary:active {
+            transition: color 0s ease-in;
+            background-color: var(--color-blue-900);
+        }
+        /* Typography */
+        
+        body {
+            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--color-gray-900);
+        }
+        
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: 0;
+        }
+        /* Page Structure */
+        
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: scroll;
+        }
+        
+        header {
+            background-color: white;
+        }
+        
+        main {
+            background-image: linear-gradient(to bottom, white, var(--color-blue-200));
+        }
+        
+        .navbar,
+        footer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding: 0.5em;
+            color: var(--color-gray-100);
+            background-color: var(--color-blue-800);
+        }
+        
+        main {
+            flex: 1;
+        }
+        
+        .navbar__menu,
+        .navbar__controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .menu {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .menu--sidebar {
+            flex-direction: column;
+        }
+        
+        .menu__list-item {
+            display: inline-block;
+            list-style-type: none;
+        }
+        
+        .section--toggleable {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1em;
+            border-bottom: 2px var(--color-gray-900) solid;
+        }
+        
+        .sidebar__group {
+            display: flex;
+            flex-direction: column;
+            margin: 0 1em;
+            margin-bottom: 2em;
+            padding: .5em 2em;
+            min-width: 14em;
+        }
+        
+        .subheader {
+            margin: 2em;
+        }
+        
+        .page_content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        
+        article {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .section__form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar"></nav>
+    </header>
+    <main>
+        <div class="subheader">
+            <h1>Data Acquistion</h1>
+        </div>
+        <div class="page_content">
+            <div class="sidebar">
+                <div class="sidebar__group">
+                    <h4></h4>
+                    <ul class="menu menu--sidebar">
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('vehicle')">Active Users</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="displayAll()">Data Review</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('vehicle')">All Sessions</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('wheel')">Wheels</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('echo')">Echo</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('line')">Lines</button></li>
+                        <li class="menu__list-item"><button class="btn btn--primary" onclick="display('other')">Other</button></li>
+
+                    </ul>
+                </div>
+            </div>
+            <article>
+                <section class="section--toggleable" id="vehicle">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Width</th>
+                                <th>Time</th>
+                            </tr>
+                            <% for(var i =0; i < vehicles.length; i++) { %>
+
+                                <tr>
+                                    <td>
+                                        <%= vehicles[i].USER%>
+                                    </td>
+                                    <td>
+                                        <%= vehicles[i].WIDTH%>
+                                    </td>
+                                    <td>
+                                        <%= vehicles[i].Time%>
+                                    </td>
+                                </tr>
+
+                                <%  } %>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="section--toggleable" id="wheel">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Left Wheel</th>
+                                <th>Right Wheel</th>
+                                <th>Time</th>
+                            </tr>
+                            <% for(var i =0; i < sensors_wheels.length; i++) { %>
+
+                                <tr>
+                                    <td>
+                                        <%= sensors_wheels[i].USER%>
+                                    </td>
+                                    <td>
+                                        <%= sensors_wheels[i].left%>
+                                    </td>
+                                    <td>
+                                        <%= sensors_wheels[i].right%>
+                                    </td>
+                                    <td>
+                                        <%= sensors_wheels[i].time%>
+                                    </td>
+                                </tr>
+
+                                <%  } %>
+                        </table>
+                    </div>
+
+                </section>
+
+
+
+                <section class="section--toggleable" id="echo">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Distance</th>
+                                <th>Time</th>
+                            </tr>
+                            <% for(var i =0; i < echo.length; i++) { %>
+
+                                <tr>
+                                    <td>
+                                        <%= echo[i].USER%>
+                                    </td>
+                                    <td>
+                                        <%= echo[i].dist%>
+                                    </td>
+                                    <td>
+                                        <%= echo[i].time%>
+                                    </td>
+                                </tr>
+
+                                <%  } %>
+                        </table>
+                    </div>
+
+                </section>
+
+
+                <section class="section--toggleable" id="line">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Line</th>
+                                <th>Time</th>
+                            </tr>
+                            <% for(var i =0; i < line.length; i++) { %>
+
+                                <tr>
+                                    <td>
+                                        <%= line[i].USER%>
+                                    </td>
+                                    <td>
+                                        <%= line[i].l1%>
+                                    </td>
+                                    <td>
+                                        <%= line[i].l2%>
+                                    </td>
+                                    <td>
+                                        <%= line[i].l4%>
+                                    </td>
+                                    <td>
+                                        <%= line[i].time%>
+                                    </td>
+                                </tr>
+
+                                <%  } %>
+                        </table>
+                    </div>
+
+                </section>
+
+                <section class="section--toggleable" id="other">
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Line</th>
+                                <th>Time</th>
+                            </tr>
+                            <% for(var i =0; i < other.length; i++) { %>
+
+                                <tr>
+                                    <td>
+                                        <%= other[i].USER%>
+                                    </td>
+                                    <td>
+                                        <%= other[i].ir%>
+                                    </td>
+                                    <td>
+                                        <%= other[i].time%>
+                                    </td>
+                                </tr>
+
+                                <%  } %>
+                        </table>
+                    </div>
+
+                </section>
+            </article>
+        </div>
+
+
+
+    </main>
+
+    <footer class="footer">
+
+    </footer>
+
+    <script src='../app.js'></script>
+    <script type='text/javascript'>
+        function display(ID) {
+            document.querySelectorAll(".section--toggleable").forEach((element) => {
+                element.style.display = "none";
+            });
+            document.querySelector("#" + ID).style.display = "flex";
+        }
+
+        function displayAll() {
+            document.querySelectorAll(".section--toggleable").forEach((element) => {
+                element.style.display = "flex";
+            });
+        }
+    </script>
+
+</body>
+
+</html>
